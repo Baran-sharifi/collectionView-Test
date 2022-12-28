@@ -8,23 +8,19 @@
 import UIKit
 
 class ViewController: UIViewController {
-    var myCollectionView:UICollectionView?
+    private lazy var collectionView: UICollectionView = {
+        let view = UICollectionView(frame: self.view.frame, collectionViewLayout: UICollectionViewFlowLayout())
+        view.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
+        view.backgroundColor = UIColor.white
+        view.dataSource = self
+        view.delegate = self
+        return view
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
 
-        let layout=UICollectionViewFlowLayout()
-        
-        
-        myCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-        myCollectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
-        myCollectionView?.backgroundColor = UIColor.white
-        
-        myCollectionView?.dataSource = self
-        myCollectionView?.delegate = self
-        
-        view.addSubview(myCollectionView ?? UICollectionView())
+        view.addSubview(collectionView)
         
     }
 }
