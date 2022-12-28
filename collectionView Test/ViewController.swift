@@ -8,6 +8,8 @@
 import UIKit
 
 class ViewController: UIViewController {
+    private lazy var widthForItem = (UIScreen.main.bounds.width-15*6)/4
+    private lazy var heightForItem = widthForItem
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: self.view.frame, collectionViewLayout: UICollectionViewFlowLayout())
         view.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
@@ -18,6 +20,7 @@ class ViewController: UIViewController {
     }()
     
     override func viewDidLoad() {
+        print(widthForItem)
         super.viewDidLoad()
         view.addSubview(collectionView)
     }
