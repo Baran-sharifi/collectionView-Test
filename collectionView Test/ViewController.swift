@@ -19,9 +19,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         view.addSubview(collectionView)
-        
     }
 }
 
@@ -62,10 +60,5 @@ extension ViewController : UICollectionViewDelegateFlowLayout{
 extension ViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row + 1) //print label
-//        collectionView.deselectItem(at: indexPath, animated: true)
     }
-//    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-//        print("im deselected\(indexPath.row)")
-//    }
 }
