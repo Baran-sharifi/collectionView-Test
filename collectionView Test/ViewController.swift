@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     private lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: self.view.frame, collectionViewLayout: UICollectionViewFlowLayout())
         view.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
-        view.register(CustomHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "Header")
+        view.register(CustomHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CustomHeader.identifier)
         view.dataSource = self
         view.delegate = self
         return view
@@ -21,6 +21,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.isScrollEnabled = false
         view.addSubview(collectionView)
     }
 }
@@ -38,9 +41,11 @@ extension ViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath)
+        
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomHeader.identifier, for: indexPath)
+        
+        return headerView
     }
-    
 }
 
 extension ViewController : UICollectionViewDelegateFlowLayout{
@@ -65,6 +70,10 @@ extension ViewController : UICollectionViewDelegateFlowLayout{
         
         return 20
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: widthForItem, height: (UIScreen.main.bounds.height - ((heightForItem * 5) + (20 * 5) + view.safeAreaInsets.bottom)))
+    }
 }
 
 extension ViewController: UICollectionViewDelegate {
@@ -75,14 +84,19 @@ extension ViewController: UICollectionViewDelegate {
 
 
 class CustomHeader: UICollectionReusableView {
-
+    public static let identifier = "CustomHeader"
+    
     public override init(frame: CGRect) {
         super.init(frame: .zero)
-
+        
         self.backgroundColor = .red
     }
-
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    
+    required public init?(coder: NSCoder) {
+        fatalError()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
     }
 }
